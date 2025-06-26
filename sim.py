@@ -219,14 +219,14 @@ class TetSim():
             for line_y, line in cleared_lines[19::-1]:
                 field_temp.insert(line_y, line)
                 field_temp.pop()
-            # place ghost piece
+            # place ghost piece "a"
             mino_locs = BLOCK_SHAPES[rot][piece]
             for x_offset, y_offset in mino_locs:
                 field_y = y + y_offset
                 field_x = x + x_offset
                 if field_y < 0 or field_x < 0 or field_x >= 10:
                     raise Exception(f"Invalid piece placement during reconstruction.\nLog:\n{str(self)}")
-                field_temp[field_y][field_x] = piece.lower()
+                field_temp[field_y][field_x] = 'a'
             # add page
             pages.append({
                 "active_piece": piece,
@@ -235,6 +235,13 @@ class TetSim():
                 "queue": queue,
                 "rows": ["".join(row) for row in field_temp][::-1],
             })
+            # place correct ghost piece
+            for x_offset, y_offset in mino_locs:
+                field_y = y + y_offset
+                field_x = x + x_offset
+                if field_y < 0 or field_x < 0 or field_x >= 10:
+                    raise Exception(f"Invalid piece placement during reconstruction.\nLog:\n{str(self)}")
+                    field_temp[field_y][field_x] = piece.lower()
         return pages[::-1]
 
     # true if collides or out of bounds
