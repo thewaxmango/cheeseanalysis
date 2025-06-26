@@ -1,0 +1,9 @@
+import utils
+
+code = "N4IgxiBcoG5QzAOngGhAZwPYDMAuARAJ0wAcBJAEygBY0BzAQwFsBTAZVwcNygEYA2avAAM1AKwB2McPjwJ9ZiwCiAOyqQBQ0ZLFjestOhYt1IEgCthTANYg0TPgE5+-YY7QAjdFHcYWUYTQKBm9IRwAONEIAgF8gqBAAQUT0AGk6RIB1JQyAGQBhakSAMQALAFVE-IB3AEtEgCEATSbktIzsgEVE3PwGxIBPazZ8zLYxJk6VVIBxFnQxfl5SgDkGgHlrAFlEzoBqACUAKTJrMSVyhgpMzIAbOgAPAA1EgDU6a0zCFTAACVeBuVfgAmJ6lBqZTorMTYawqfL5WrlACOqWsyOKLAArrgPPlSrhcOs9g9wsV+A9nkdEhRik9eI4niF1vhahI2NgAF7ImAkYp7azJax0NgHfCdJSdXAPA7CYrCJQUMADfJ0MjAsC3A5sFTVVJ7MCJAC8IBiQA"
+fumen = utils.code_to_fumen(code)
+pages = utils.decode(fumen)
+
+
+for page in pages[:2]:
+    print(utils.page_to_state(page))
