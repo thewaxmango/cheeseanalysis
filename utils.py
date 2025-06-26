@@ -41,19 +41,19 @@ async def code_to_json(replay_code):
     return json_out
 
 async def gen_turn(page, ai):
-    fumen_board, hold, queue, placement = page_to_state(page)
+    fumen_field, hold, queue, placement = page_to_state(page)
     turn = {
         "path_taken": -1,
         "path_count": -1,
         "paths": []
     }
 
-    snapshot = Snapshot(hold=hold, queue=queue, matrix=fumen_board)
+    snapshot = Snapshot(hold=hold, queue=queue, matrix=fumen_field)
     suggestions, stats = await ai.analyze(snapshot)
     nodes, iterations, time = stats
 
     for i, suggestion in enumerate(suggestions):
-        first_placement, path = gen_path(suggestion, fumen_board, hold, queue)
+        first_placement, path = gen_path(suggestion, fumen_field, hold, queue)
         if first_placement == placement:
             turn["path_taken"] = i
         turn["paths"].append(path)
@@ -62,18 +62,34 @@ async def gen_turn(page, ai):
     turn["path_count"] = len(suggestions)
     if turn["path_taken"] == -1:
         turn["path_taken"] = turn["path_count"]
+        did_hold = queue[0] == placement[0]
         turn["paths"].append({
             "score": 1000000,
             "page_count": 1,
             "pages": [{ #! todo
-                
+                "active": placement[1],
+                "hold": queue[0] if did_hold else hold,
+                "hold_available": not did_hold,
+                "queue": hold + queue[1:] if hold else queue[1:],
+                "rows": glue_ghost(fumen_field.copy(), placement)
             }]
         })
-
     return turn
 
+def glue_ghost(fumen_field, placement):
+    block, rot, x, y = placement
+    mino_offsets = sim.BLOCK_SHAPES[rot][block]
+    for x_off, y_off in mino_offsets:
+        nx, ny = x + x_off, y + y_off
+        row = list(fumen_field[ny])
+        row[nx] = 'a'
+        fumen_field[ny] = "".join(row)
+    # pad with empty lines
+    for _ in range(25 - len(fumen_field)):
+        fumen_field.append("___________")
+    return fumen_field[::-1]
 
-def gen_path(suggestion, fumen_board, hold, queue):
+def gen_path(suggestion, fumen_field, hold, queue):
     rating, inputs = suggestion
     path = {
         "piece_loc": "",
@@ -81,8 +97,8 @@ def gen_path(suggestion, fumen_board, hold, queue):
         "page_count": inputs.count("hd"),
         "pages" : []
     }
-    tetsim = sim.TetSim(fumen_board, queue[0], hold, queue[1:])
-    first_placement, piece_loc, pages = tetsim.export_pages(fumen_board, queue[0], hold, queue[1:], inputs)
+    tetsim = sim.TetSim(fumen_field, queue[0], hold, queue[1:])
+    first_placement, piece_loc, pages = tetsim.export_pages(fumen_field, queue[0], hold, queue[1:], inputs)
     path["pages"] = pages
     path["piece_loc"] = piece_loc
     return first_placement, path
@@ -92,7 +108,7 @@ def code_to_fumen(replay_code):
                     data = {"replay": replay_code})
     return(response.json()['fumen'])
 
-# (board, hold, queue, placement)
+# (field, hold, queue, placement)
 def page_to_state(page):
     queue_raw = page.comment
     queue_search = search(r'#Q=\[(.?)\]\((.?)\)(.*)', queue_raw)
@@ -104,15 +120,15 @@ def page_to_state(page):
         queue = queue_search.group(3)
     else:
         raise Exception("Failed to parse queue from fumen comment")
-    board = page.get_field().string().replace('X', 'G')
-    board = board.split('\n')
-    board.pop()
-    board = board[::-1]
+    field = page.get_field().string().replace('X', 'G')
+    field = field.split('\n')
+    field.pop()
+    field = field[::-1]
     op = page.operation
     op_piece = op.piece_type
     op_rot = rot_to_code[op.rotation]
     op_x, op_y = fumen_coords(op)
-    return (board, hold, current + queue[:QUEUE_LEN], (op_piece, op_rot, op_x, op_y))
+    return (field, hold, current + queue[:QUEUE_LEN], (op_piece, op_rot, op_x, op_y))
 
 # FUMEN_COORDS_OFFSET[PIECE][ROTATION]
 FUMEN_COORDS_OFFSET = {
