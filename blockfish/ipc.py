@@ -1,13 +1,12 @@
-import asyncio, subprocess
+import asyncio, os, stat, subprocess, sys
 from google.protobuf.internal.decoder import _DecodeVarint32
 from google.protobuf.internal.encoder import _EncodeVarint
 
 import blockfish.blockfish_pb2 as protos
 
-
 class IPC:
-
-    DEFAULT_BLOCKFISH_PATH = 'blockfish'
+    DEFAULT_BLOCKFISH_PATH = os.path.join(sys._MEIPASS if getattr(sys, 'frozen', False) else os.path.abspath("."),
+                                          'blockfish/blockfish')
 
     def __init__(self, process):
         self._sp = process
@@ -26,6 +25,7 @@ class IPC:
 
 
 async def create_subprocess_ipc(program = IPC.DEFAULT_BLOCKFISH_PATH):
+    os.chmod(IPC.DEFAULT_BLOCKFISH_PATH, os.stat(IPC.DEFAULT_BLOCKFISH_PATH).st_mode | stat.S_IEXEC)
     sp = await asyncio.create_subprocess_exec(
         program = program,
         stdout = subprocess.PIPE,
