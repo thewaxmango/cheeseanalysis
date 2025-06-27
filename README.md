@@ -1,4 +1,5 @@
 * thanks iitali for blockfish
+* thanks chouhy for windows exe
 
 uh
 
