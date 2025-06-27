@@ -1,3 +1,5 @@
+* thanks iitali for blockfish
+
 uh
 
 i need to do error handling
