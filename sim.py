@@ -241,7 +241,7 @@ class TetSim():
                 field_x = x + x_offset
                 if field_y < 0 or field_x < 0 or field_x >= 10:
                     raise Exception(f"Invalid piece placement during reconstruction.\nLog:\n{str(self)}")
-                    field_temp[field_y][field_x] = piece.lower()
+                field_temp[field_y][field_x] = piece.lower()
         return pages[::-1]
 
     # true if collides or out of bounds

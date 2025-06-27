@@ -1,7 +1,0 @@
-import utils
-import asyncio
-import json
-
-code = "N4IgxiBcoG5QzAOngGhAZwPYDMAuARAJ0wAcBJAEygBY0BzAQwFsBTAZVwcNygEYA2avAAM1AKwB2McPjwJ9ZiwCiAOyqQBQ0ZLFjestOhYt1IEgCthTANYg0TPgE5+-YY7QAjdFHcYWUYTQKBm9IRwAONEIAgF8gqBAAQUT0AGk6RIB1JQyAGQBhakSAMQALAFVE-IB3AEtEgCEATSbktIzsgEVE3PwGxIBPazZ8zLYxJk6VVIBxFnQxfl5SgDkGgHlrAFlEzoBqACUAKTJrMSVyhgpMzIAbOgAPAA1EgDU6a0zCFTAACVeBuVfgAmJ6lBqZTorMTYawqfL5WrlACOqWsyOKLAArrgPPlSrhcOs9g9wsV+A9nkdEhRik9eI4niF1vhahI2NgAF7ImAkYp7azJax0NgHfCdJSdXAPA7CYrCJQUMADfJ0MjAsC3A5sFTVVJ7MCJAC8IBiQA"
-with open("log.json", "w") as f:
-    f.write(json.dumps(asyncio.run(utils.code_to_json(code)), indent=4, ensure_ascii=False))

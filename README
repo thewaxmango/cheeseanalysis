@@ -1,0 +1,9 @@
+uh
+
+i need to do error handling
+
+the end
+
+i also need to package in the executable, but you can build it yourself at https://github.com/blockfish/blockfish/tree/dev and add it to path
+
+run main.py from this folder.
