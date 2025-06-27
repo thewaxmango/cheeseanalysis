@@ -418,14 +418,12 @@ class CheeseAnalyzer():
         if block == "_":
             return self.term.normal
         color = BASE_COLORS[block]
-        style = ""
         match shade:
             case 1:
                 color = tuple(int(c * 0.7) for c in color)
             case 2:
                 color = tuple(int(c * 0.4) for c in color)
-        style += self.term.color_rgb(*color)
-        return style
+        return self.term.color_rgb(*color)
 
     # inclusive on x2, y2
     # x1 < x2, y1 < y2
