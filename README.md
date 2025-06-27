@@ -1,4 +1,5 @@
-executables available for windows + linux
+executables available for windows + linux, or run main.py from this folder
+
 minimum supported terminal size 78x28, suggested 30 vertical
 
 ## special thanks
@@ -18,4 +19,3 @@ minimum supported terminal size 78x28, suggested 30 vertical
 
 ## i need to do error handling
 * if it bricks on initializing or analyzing it's probably blockfish error and not handled properly, just restart
-* but you can build it yourself and run main.py from this folder.
