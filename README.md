@@ -11,7 +11,7 @@ minimum supported terminal size 78x28, suggested 30 vertical
 * accuracy: how many moves matched blockfish best score
 * rank: order blockfish returns choices in, first is best
 * score: rating that blockfish uses, lower is better. '?' used when player chooses move blockfish didn't return
-* current: rough idea of where piece goes, <piece>-<\columns used>
+* current: rough idea of where piece goes, {piece}-{columns used}
 * star: what move you chose
 * arrow: what choice/path you are looking at
 * page: following moves suggested by blockfish
