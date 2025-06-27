@@ -6,8 +6,8 @@ i need to do error handling
 
 the end
 
-executables available for windows + linux
+## executables available for windows + linux
 
 but you can build it yourself and run main.py from this folder.
 
-minimum terminal size 78x28
+### minimum terminal size 78x28
