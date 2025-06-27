@@ -1,0 +1,4 @@
+blessed~=1.21.0
+protobuf~=6.31.1
+py_fumen~=0.1.11
+Requests~=2.32.4
