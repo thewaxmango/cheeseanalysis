@@ -2,7 +2,7 @@ uh
 
 i need to do error handling
 
-# if it brick it's probably blockfish error and not handled properly, just restart
+# if it bricks it's probably blockfish error and not handled properly, just restart
 
 the end
 
