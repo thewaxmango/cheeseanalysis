@@ -2,10 +2,12 @@ uh
 
 i need to do error handling
 
+# if it brick it's probably blockfish error and not handled properly, just restart
+
 the end
 
-i also need to package in the executable, but you can build it yourself at https://github.com/blockfish/blockfish/tree/dev and add it to path
+executables available for windows + linux
 
-run main.py from this folder.
+but you can build it yourself and run main.py from this folder.
 
 minimum terminal size 78x28
