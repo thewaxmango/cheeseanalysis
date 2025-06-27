@@ -1,9 +1,9 @@
+executables available for windows + linux
+minimum supported terminal size 78x28, suggested 30 vertical
+
 ## special thanks
 * thanks iitali for blockfish
 * thanks chouhy for windows exe
-
-### executables available for windows + linux
-### minimum supported terminal size 78x28, suggested 30 vertical
 
 ## analysis interface
 * turn: one turn for every piece placed
