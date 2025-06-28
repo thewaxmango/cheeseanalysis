@@ -230,7 +230,7 @@ class CheeseAnalyzer():
         data = self.data_pipe["analysis"]
         turn = 0
         turn_count = data["turn_count"]
-        path = 0
+        path = data["turns"][turn]["path_taken"]
         path_taken = data["turns"][turn]["path_taken"]
         path_count = data["turns"][turn]["path_count"]
         page = 0
@@ -245,7 +245,7 @@ class CheeseAnalyzer():
 
         def reset_path():
             nonlocal path, path_taken, path_count
-            path = 0
+            path = data["turns"][turn]["path_taken"]
             path_taken = data["turns"][turn]["path_taken"]
             path_count = data["turns"][turn]["path_count"]
             reset_page()
@@ -421,14 +421,12 @@ class CheeseAnalyzer():
         if block == "_":
             return self.term.normal
         color = BASE_COLORS[block]
-        style = ""
         match shade:
             case 1:
                 color = tuple(int(c * 0.7) for c in color)
             case 2:
                 color = tuple(int(c * 0.4) for c in color)
-        style += self.term.color_rgb(*color)
-        return style
+        return self.term.color_rgb(*color)
 
     # inclusive on x2, y2
     # x1 < x2, y1 < y2
