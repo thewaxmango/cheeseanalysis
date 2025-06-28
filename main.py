@@ -13,7 +13,7 @@
 
 import blessed
 import asyncio
-import json
+from pyperclip import paste
 from time import time_ns
 from functools import lru_cache
 
@@ -80,7 +80,7 @@ class CheeseAnalyzer():
         self.draw_box(input_x - 1, width - input_x, height // 2 - 1, height // 2 + 1)
 
         # hints
-        hints_text = "[up] sample | [ctrl+w] clear | [enter] submit | [esc] quit"
+        hints_text = "[up] sample | [down] quick paste | [ctrl+w] clear | [enter] submit | [esc] quit"
         hints_x = (width - len(hints_text)) // 2
         hints_y = height - 2
         self.write(self.term.move(hints_y, hints_x) + self.term.dim + hints_text + self.term.normal)
@@ -113,6 +113,9 @@ class CheeseAnalyzer():
                     case "KEY_UP":
                         self.data_pipe["replay_code"] = "N4IgxiBcoG5QzAOngGhAZwPYDMAuARAJ0wAcBJAEygBY0BzAQwFsBTAZVwcNygEYA2avAAM1AKwB2McPjwJ9ZiwCiAOyqQBQ0ZLFjestOhYt1IEgCthTANYg0TPgE5+-YY7QAjdFHcYWUYTQKBm9IRwAONEIAgF8gqBAAQUT0AGk6RIB1JQyAGQBhakSAMQALAFVE-IB3AEtEgCEATSbktIzsgEVE3PwGxIBPazZ8zLYxJk6VVIBxFnQxfl5SgDkGgHlrAFlEzoBqACUAKTJrMSVyhgpMzIAbOgAPAA1EgDU6a0zCFTAACVeBuVfgAmJ6lBqZTorMTYawqfL5WrlACOqWsyOKLAArrgPPlSrhcOs9g9wsV+A9nkdEhRik9eI4niF1vhahI2NgAF7ImAkYp7azJax0NgHfCdJSdXAPA7CYrCJQUMADfJ0MjAsC3A5sFTVVJ7MCJAC8IBiQA"
                         self.status = "ANALYZING"
+                    case "KEY_DOWN":
+                        active_text += paste()
+                        update_tb()
                     case _:
                         if key == '\x17':
                             active_text = ""

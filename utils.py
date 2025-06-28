@@ -86,7 +86,7 @@ async def gen_turn(page, ai):
     placement_symm = list(placement)
     if placement[0] == "O":
         placement_symm[1] = 0
-    elif placement[0] in "ILSZ":
+    elif placement[0] in "ISZ":
         placement_symm[1] %= 2
 
     for i, suggestion in enumerate(suggestions):
@@ -95,7 +95,7 @@ async def gen_turn(page, ai):
         first_placement_symm = list(first_placement)
         if first_placement[0] == "O":
             first_placement_symm[1] = 0
-        elif first_placement[0] in "ILSZ":
+        elif first_placement[0] in "ISZ":
             first_placement_symm[1] %= 2
 
         if first_placement_symm == placement_symm:
@@ -114,11 +114,11 @@ async def gen_turn(page, ai):
             "page_count": 1,
             "piece_loc": f"{placement[0]}-{cols}",
             "pages": [{
-                "active": placement[0],
-                "hold": queue[0] if did_hold else hold,
+                "active_piece": placement[0],
+                "hold_piece": queue[0] if did_hold else hold,
                 "hold_available": not did_hold,
                 "queue": hold + queue[1:] if did_hold and hold else queue[1:],
-                "rows": glue_ghost(fumen_field.copy(), placement)
+                "rows": glue_ghost(fumen_field.copy(), placement)[-20:]
             }]
         })
         turn["path_count"] += 1
@@ -129,7 +129,7 @@ def glue_ghost(fumen_field, placement):
     block, rot, x, y = placement
     mino_offsets = sim.BLOCK_SHAPES[rot][block]
     for _ in range(25 - len(fumen_field)):
-        fumen_field.append("___________")
+        fumen_field.append("__________")
     for x_off, y_off in mino_offsets:
         nx, ny = x + x_off, y + y_off
         row = list(fumen_field[ny])
