@@ -4,7 +4,8 @@ minimum supported terminal size 78x28, suggested 30 vertical
 
 ## special thanks
 * thanks iitali for blockfish
-* thanks chouhy for windows exe
+* thanks chouhy for windows exe v0.0
+* thanks swng for windows and mac exe v0.1
 
 ## analysis interface
 * turn: one turn for every piece placed
